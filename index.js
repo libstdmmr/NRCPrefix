@@ -6,7 +6,6 @@
  *
  * [State Number]\[District]([NAING])[Register No]
  *
- *
  */
 
 var MM_NUM = "\u1040-\u1049";
@@ -221,3 +220,5 @@ MMNRC.formatConvert = function(nrc){
   }
   return null;
 };
+
+module.exports = MMNRC;
