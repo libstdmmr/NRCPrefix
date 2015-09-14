@@ -117,17 +117,17 @@ MMNRC.prototype = {
     if((this.match = regx_eng.exec(nrc))){
       this.lang = "en";
       this.state = this.match[1];
-      this.dist = parseInt(this.match[2]);
-      this.num = parseInt(this.match[3]);
+      this.dist = parseInt(this.match[2], 10);
+      this.num = parseInt(this.match[3], 10);
       // 3 Characters Districts are not compete and can"t be generate Full Format
       if(this.dist.length === 3)
         this.inCompleteInfo = true;
       return this;
     } else if ((this.match = regx_mm.exec(nrc))){
       this.lang = "mm";
-      this.state = MMNRC.toEngNum(this.match[1]);
-      this.dist = MMNRC.convDistrict(this.match[2]);
-      this.num = MMNRC.toEngNum(this.match[3]);
+      this.state = MMNRC.toEngNum(this.match[1], 10);
+      this.dist = MMNRC.convDistrict(this.match[2], 10);
+      this.num = MMNRC.toEngNum(this.match[3], 10);
       return this;
     }
     // Return for error
@@ -153,10 +153,10 @@ MMNRC.prototype.getFormat = function (lang){
 };
 
 /**
- * Get District
+ * Get State 
  */
 
-MMNRC.prototype.getDistrict = function (lang) {
+MMNRC.prototype.getState= function (lang) {
   if (lang === "mm") {
     return states[this.dist].mm;
   } else {
@@ -203,8 +203,8 @@ MMNRC.formatConvert = function(nrc){
   if((_match = regx_eng.exec(nrc))){
     _res.lang = "en";
     _res.state += _match[1];
-    _res.dist += parseInt(_match[2]);
-    _res.number = parseInt(_match[3]);
+    _res.dist += parseInt(_match[2], 10);
+    _res.number = parseInt(_match[3], 10);
     _res.fullcode = _res.state + "/" + _res.dist + "(N)" + _res.number;
     // 3 Characters Districts are not compete and can"t be generate Full Format
     if(_res.dist.length === 3)
@@ -212,9 +212,9 @@ MMNRC.formatConvert = function(nrc){
     return _res;
   } else if ((_match = regx_mm.exec(nrc))){
     _res.lang = "mm";
-    _res.state += MMNRC.toEngNum(_match[1]);
-    _res.dist = MMNRC.convDistrict(_match[2]);
-    _res.number = MMNRC.toEngNum(_match[3]);
+    _res.state += MMNRC.toEngNum(_match[1], 10);
+    _res.dist = MMNRC.convDistrict(_match[2], 10);
+    _res.number = MMNRC.toEngNum(_match[3], 10);
     _res.fullcode = _res.state + "/" + _res.dist + "(N)" + _res.number;
     return _res;
   }
