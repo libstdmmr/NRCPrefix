@@ -1,6 +1,6 @@
 {
   "name": "myanmar-nrc-tool",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Myanmar NRC assert tool, used unicode",
   "main": "index.js",
   "repository": {
