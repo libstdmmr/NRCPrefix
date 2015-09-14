@@ -46,5 +46,5 @@ nrc.isEqual('၁၂/ဥကမ(နိုင်)၁၂၃၄၅၆') // return tru
 ```js
 var nrc = MMNRC("14/PaPaNa(N)123456");
 
-nrc.getState("mm") // ေဧရာဝတီတိုင်း
+nrc.getState("mm") //ဧရာဝတီတိုင်း
 ```
