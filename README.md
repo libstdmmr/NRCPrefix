@@ -1,7 +1,7 @@
 NRCPrefix
 =========
 
-Prefixer for Myanmar National Registration Card's No Format
+Prefixer for Myanmar National Registration Card's Format
 
 ## Match Formats
 
@@ -18,10 +18,8 @@ Prefer formats
 
 *NOTE*
 
-Three english characters in district are not complete format.  
-So you should be avoid using six english characters
-
-Prefixer for Myanmar National Registration Card's No Format
+Three english characters in district are not complete format and will not support some function.
+So you should be use six english characters for district.
 
 ## Usage
 ### Get format
@@ -41,10 +39,11 @@ var nrc = MMNRC("12/OUKAMA (N) 123456");
 nrc.isEqual('၁၂/ဥကမ(နိုင်)၁၂၃၄၅၆') // return true;
 ```
 
-### Get district name
+### Get State name from nrc card
 
 ```js
 var nrc = MMNRC("14/PaPaNa(N)123456");
 
 nrc.getState("mm") //ဧရာဝတီတိုင်း
+nrc.getState() // Ayeyarwaddy
 ```
