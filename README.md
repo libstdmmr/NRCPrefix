@@ -14,7 +14,7 @@ Prefixer for Myanmar National Registration Card's No Format
 - ၁၂/ဥကမ(နိုင်)၁၂၃၄၅၆
 
 [NOTE]:
-Three Character district are not complete format! And So some function can't be do.
+Three Character district are not complete format! And so some functionality can't be done.
 Read README on specific languages
 
 Prefixer for Myanmar National Registration Card's No Format
