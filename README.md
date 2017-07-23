@@ -17,7 +17,7 @@ Prefixer for Myanmar National Registration Card's No Format
 Three Character district are not complete format! And so some functionality can't be done.
 Read README on specific languages
 
-Prefixer for Myanmar National Registration Card's No Format
+NRC Prefixer for Myanmar National Registration Card's number Format
 
 ## Usage
 #### Convert format
