@@ -12,8 +12,8 @@ var MM_NUM = "\u1040-\u1049";
 var MM_NUM_CHARS = "\u1040\u1041\u1042\u1043\u1044\u1045\u1046\u1047\u1048\u1040";
 var mmChar = "\u1000\u1001\u1002\u1003\u1004\u1005\u1006\u1007\u1008\u100A\u100E\u100F\u1010\u1011\u1012\u1013\u1014\u1015\u1016\u1017\u1018\u1019\u101A\u101B\u101C\u101D\u101E\u101F\u1020\u1025\u1027";
 var NAING_MM = "\u1014\u102D\u102F\u1004\u103A";
-var regx_eng = /^([\d]{1,2})\/([\w]{3}|[\w]{6})\(?:N|NAING\)([\d]{6})$/;
-var regx_mm = new RegExp("^(["+MM_NUM+"]{1,2})\/(["+mmChar+"]{3}|["+mmChar+"]{6})\((?:"+NAING_MM+")\)(["+MM_NUM+"]{6})$");
+var regx_eng = /^([\d]{1,2})\/([\w]{3}|[\w]{6})\((N|NAING)\)([\d]{6})$/;
+var regx_mm = new RegExp("^(["+MM_NUM+"]{1,2})\/(["+mmChar+"]{3}|["+mmChar+"]{6})\((?:"+"\\("+NAING_MM+"\\)"+")\)(["+MM_NUM+"]{6})$");
 
 var states = [
   {en:"Kachin", mm:"\u1000\u1001\u103B\u1004\u103A\u1015\u103C\u100A\u103A\u1014\u101A\u103A"},
@@ -107,18 +107,22 @@ var CHARACTERS = {
  * {String} NRC String
  */
 var MMNRC = function(nrc){
+  //console.log(nrc);
   nrc = nrc.trim();
   nrc = nrc.replace(/\s/g, "");
-  return new this.prototype.init(nrc);
+  return new this.init(nrc);
 };
 
-MMNRC.prototype = {
-  inti: function(nrc){
+
+MMNRC.prototype.init =  function(nrc){
+    //console.log(nrc);
+    //console.log(regx_mm)
+    //console.log(regx_mm.exec(nrc));
     if((this.match = regx_eng.exec(nrc))){
       this.lang = "en";
       this.state = this.match[1];
-      this.dist = parseInt(this.match[2], 10);
-      this.num = parseInt(this.match[3], 10);
+      this.dist = this.match[2];
+      this.num = parseInt(this.match[4], 10);
       // 3 Characters Districts are not compete and can"t be generate Full Format
       if(this.dist.length === 3)
         this.inCompleteInfo = true;
@@ -127,33 +131,32 @@ MMNRC.prototype = {
       this.lang = "mm";
       this.state = MMNRC.toEngNum(this.match[1], 10);
       this.dist = MMNRC.convDistrict(this.match[2], 10);
-      this.num = MMNRC.toEngNum(this.match[3], 10);
+      this.num = MMNRC.toEngNum(this.match[4], 10);
       return this;
     }
     // Return for error
     throw new Error("Type Not Match!");
   },
 
-  isEqual: function(nrc){
+MMNRC.prototype.isEqual = function(nrc){
     return MMNRC.formatConvert(nrc).fullcode === this.getFormat();
   }
-};
+
 
 MMNRC.prototype.init.prototype = MMNRC.prototype;
-
 /**
  * Get Default Format
  */
 MMNRC.prototype.getFormat = function (lang){
   if(lang && lang === "mm" && !this.inCompleteInfo) {
-    MMNRC.toMyaNum(this.state) + "/" + MMNRC.convDistrict(this.dist) + "("+NAING_MM+")" + MMNRC.toMyaNum(this.num);
+    return MMNRC.toMyaNum(this.state) + "/" + MMNRC.convDistrict(this.dist) + "("+NAING_MM+")" + MMNRC.toMyaNum(this.num);
   } else {
-    this.state + "/" + this.dist + "(N)" + this.num;
+    return this.state + "/" + this.dist + "(N)" + this.num;
   }
 };
 
 /**
- * Get State 
+ * Get State
  */
 
 MMNRC.prototype.getState= function (lang) {
@@ -179,6 +182,7 @@ MMNRC.toEngNum = function(MM_NUM){
  * Convert English Number type to Myanmar
  */
 MMNRC.toMyaNum = function(enNum){
+  //console.log(enNum);
   var _res = "";
   while(enNum > 0){
     _res = enNum%10 + _res;
